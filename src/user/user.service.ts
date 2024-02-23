@@ -24,8 +24,12 @@ export class UserService {
     };
   }
   
-  findByEmaik(email: string){
-    return this.prisma.user.findUnique({where:{email}})
+  async findByEmail(email: string){
+    const findUser = await this.prisma.user.findUnique({where:{email}});
+    return {
+      ...findUser,
+      password: undefined
+    }
   }
 
   findAll() {
